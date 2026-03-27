@@ -1,408 +1,545 @@
+好的，以下是完整 HTML 版本：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>周报汇报中心</title>
+  <title>iOS增值业务周报</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    :root {
+      --primary: #4F46E5;
+      --primary-light: #EEF2FF;
+      --secondary: #06B6D4;
+      --secondary-light: #ECFEFF;
+      --accent: #F59E0B;
+      --accent-light: #FFFBEB;
+      --success: #10B981;
+      --success-light: #ECFDF5;
+      --purple: #7C3AED;
+      --purple-light: #F5F3FF;
+      --text-main: #1E293B;
+      --text-sub: #64748B;
+      --border: #E2E8F0;
+      --bg: #F1F5F9;
+      --card: #FFFFFF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
-      background: #f5f6fa;
-      color: #333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      line-height: 1.75;
     }
 
-    /* ===== 顶部导航栏 ===== */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 60px;
-      background: #1a1f36;
+    /* ── Header ── */
+    .site-header {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 55%, #06B6D4 100%);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      pointer-events: none;
+    }
+    .site-header::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .site-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      position: relative;
+      z-index: 1;
+    }
+    .badge-row {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* ── Section Title ── */
+    .section-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      z-index: 999;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-
-    .logo {
-      color: #fff;
+      gap: 10px;
       font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 40px 0 20px;
     }
-
-    /* ===== 右上角导航菜单 ===== */
-    nav {
-      display: flex;
-      gap: 8px;
-    }
-
-    nav a {
-      color: #ccc;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 14px;
-      transition: all 0.25s;
-    }
-
-    nav a:hover {
-      background: #2e3557;
-      color: #fff;
-    }
-
-    nav a.active {
-      background: #4f6ef7;
-      color: #fff;
-    }
-
-    /* ===== 内容区域 ===== */
-    main {
-      margin-top: 60px;
-      padding: 40px;
-      min-height: calc(100vh - 60px);
-    }
-
-    .section {
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== 卡片样式 ===== */
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-
-    .card h2 {
-      font-size: 20px;
-      margin-bottom: 16px;
-      color: #1a1f36;
-      border-left: 4px solid #4f6ef7;
-      padding-left: 12px;
-    }
-
-    .card p, .card li {
-      font-size: 15px;
-      line-height: 2;
-      color: #555;
-    }
-
-    .card ul {
-      padding-left: 20px;
-    }
-
-    /* ===== 数据卡片 ===== */
-    .stats-row {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .stat-box {
+    .section-title .line {
       flex: 1;
-      min-width: 160px;
-      background: #fff;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), transparent);
+      border-radius: 2px;
+    }
+    .section-title .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(79,70,229,0.09);
+    }
+
+    /* ── Card Header ── */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: var(--primary-light); }
+    .icon-cyan   { background: var(--secondary-light); }
+    .icon-amber  { background: var(--accent-light); }
+    .icon-green  { background: var(--success-light); }
+    .icon-purple { background: var(--purple-light); }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .card-tag {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
       border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      white-space: nowrap;
     }
+    .tag-blue   { background: var(--primary-light); color: var(--primary); }
+    .tag-cyan   { background: var(--secondary-light); color: #0891B2; }
+    .tag-amber  { background: var(--accent-light); color: #B45309; }
+    .tag-green  { background: var(--success-light); color: #059669; }
+    .tag-purple { background: var(--purple-light); color: var(--purple); }
 
-    .stat-box .num {
-      font-size: 32px;
-      font-weight: bold;
-      color: #4f6ef7;
+    .card-body {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.8;
     }
+    .card-body p { margin-bottom: 8px; }
+    .card-body p:last-child { margin-bottom: 0; }
 
-    .stat-box .label {
-      font-size: 13px;
-      color: #999;
+    /* ── Bullet list ── */
+    .bullet-list {
+      list-style: none;
+      padding: 0;
       margin-top: 6px;
     }
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-sub);
+      padding: 4px 0;
+    }
+    .bullet-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
 
-    /* ===== 表格 ===== */
+    /* ── Data Table ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-top: 6px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
+      font-size: 13px;
     }
-
-    th {
-      background: #f0f2ff;
-      color: #444;
-      padding: 12px 16px;
+    thead {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      color: white;
+    }
+    thead th {
+      padding: 12px 14px;
+      text-align: center;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(even) { background: #F8FAFC; }
+    tbody tr:hover { background: var(--primary-light); transition: background 0.15s; }
+    tbody td {
+      padding: 11px 14px;
+      text-align: center;
+      color: var(--text-sub);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    .td-highlight {
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .td-name {
       text-align: left;
+      color: var(--text-main);
+      font-weight: 500;
     }
 
-    td {
-      padding: 12px 16px;
-      border-bottom: 1px solid #f0f0f0;
-      color: #555;
+    /* ── Data Insight ── */
+    .insight-box {
+      margin-top: 14px;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--purple-light) 100%);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      font-size: 13.5px;
+      color: var(--text-main);
+      line-height: 1.75;
+    }
+    .insight-box strong { color: var(--primary); }
+
+    /* ── Next Week ── */
+    .next-card {
+      background: var(--card);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+    }
+    .next-card:hover {
+      box-shadow: 0 4px 16px rgba(79,70,229,0.09);
+    }
+    .next-card.highlight {
+      border: 2px solid var(--primary);
+      background: linear-gradient(135deg, #FAFBFF 0%, #F5F3FF 100%);
     }
 
-    tr:hover td { background: #fafbff; }
-
-    .tag {
-      display: inline-block;
+    .next-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .next-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .key-badge {
+      margin-left: 8px;
+      font-size: 11px;
+      font-weight: 700;
       padding: 3px 10px;
-      border-radius: 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      color: white;
+    }
+
+    /* ── Dimension Grid ── */
+    .dim-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .dim-grid { grid-template-columns: 1fr; }
+    }
+    .dim-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .dim-label {
       font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .tag.green  { background: #e8f9f0; color: #27ae60; }
-    .tag.blue   { background: #eaf0ff; color: #4f6ef7; }
-    .tag.orange { background: #fff4e8; color: #e67e22; }
-
-    /* 页面标题 */
-    .page-title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1a1f36;
-      margin-bottom: 24px;
+    .dim-label span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: inline-block;
+    }
+    .dim-content {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.75;
     }
 
-    .page-subtitle {
-      font-size: 14px;
-      color: #999;
-      margin-top: -18px;
-      margin-bottom: 24px;
+    /* ── Review Grid ── */
+    .review-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    @media (max-width: 600px) {
+      .review-grid { grid-template-columns: 1fr; }
+    }
+    .review-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .review-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .review-label span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      display: inline-block;
+    }
+    .review-content {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.75;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      text-align: center;
+      padding: 28px 0 36px;
+      font-size: 12px;
+      color: #94A3B8;
     }
   </style>
 </head>
 <body>
 
-<!-- 顶部导航栏 -->
-<header>
-  <div class="logo">📊 周报汇报中心</div>
-  <nav>
-    <a href="#" class="active" onclick="showSection('overview', this)">本周概览</a>
-    <a href="#" onclick="showSection('data', this)">数据指标</a>
-    <a href="#" onclick="showSection('model', this)">模型分层</a>
-    <a href="#" onclick="showSection('plan', this)">下周计划</a>
-    <a href="#" onclick="showSection('archive', this)">历史归档</a>
-  </nav>
+<!-- ═══ Header ═══ -->
+<header class="site-header">
+  <h1>📊 iOS 增值业务周报</h1>
+  <div class="badge-row">
+    <span class="badge">✅ AI项目持续推进</span>
+    <span class="badge">🚀 日常精细化策略落地</span>
+    <span class="badge">🤖 AI客服智能管线继续跟进</span>
+  </div>
 </header>
 
-<main>
+<div class="container">
 
-  <!-- 本周概览 -->
-  <div id="overview" class="section active">
-    <div class="page-title">本周概览</div>
-    <div class="page-subtitle">2025年 第XX周 | 更新时间：2025-07-XX</div>
+  <!-- ═══ 本周工作进展 ═══ -->
+  <div class="section-title">
+    <div class="dot"></div>
+    本周工作进展
+    <div class="line"></div>
+  </div>
 
-    <div class="stats-row">
-      <div class="stat-box">
-        <div class="num">33,986</div>
-        <div class="label">预测用户总数</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">167.3万</div>
-        <div class="label">预估付费金额</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">21,436</div>
-        <div class="label">预估付费人数</div>
-      </div>
-      <div class="stat-box">
-        <div class="num">63.1%</div>
-        <div class="label">整体付费率</div>
-      </div>
+  <!-- 1. 本地付费预测模型 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-blue">🤖</div>
+      <span class="card-title">1. AI 本地付费预测模型策略</span>
+      <span class="card-tag tag-blue">已上线</span>
     </div>
-
-    <div class="card">
-      <h2>本周核心工作</h2>
-      <ul>
-        <li>完成本地付费预测模型的本周节点推理，覆盖用户 33,986 人</li>
-        <li>基于模型输出完成用户付费分层方案（L1~L6），输出可用于圈选的分层标签</li>
-        <li>整理各层预测付费金额及付费人数，为后续运营补贴决策提供数据支撑</li>
-        <li>完成分层方案文档定稿，同步至相关业务团队</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>本周结论</h2>
-      <p>当前节点用户整体付费意愿偏高，分布峰值集中在 70%~75% 区间。L3~L6 四层合计覆盖用户占比超 87%，是本次运营的主要目标群体。建议优先对 L5/L6 高意愿用户执行 VIP 触达与会员绑定，同时对 L2 培育期用户投放限时优惠提升转化。</p>
+    <div class="card-body">
+      <p>基于本地 AI 预测模型对 H55 用户进行付费潜力分层（L1-L6），并于 3 月 26 日使用该分层人群进行企微定向推送，验证模型对用户付费率与付费金额的预测精度。本次推送覆盖全量分层人群，为后续精细化运营提供真实数据依据。</p>
     </div>
   </div>
 
-  <!-- 数据指标 -->
-  <div id="data" class="section">
-    <div class="page-title">数据指标</div>
-    <div class="page-subtitle">本周节点模型输出汇总</div>
+  <!-- 2. 天降福利金 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-cyan">🎁</div>
+      <span class="card-title">2. AI 天降福利金策略</span>
+      <span class="card-tag tag-cyan">已投放</span>
+    </div>
+    <div class="card-body">
+      <p>完成企微 1v1 推送策略的配置与审核，正式推送目标人群遵循 14 天 CD 周期。与算法同事协同，同步上线随机探索实验，测试不同补贴额度对不同潜力人群的转化效果，迈出智能补贴投放的第一步。</p>
+    </div>
+  </div>
 
-    <div class="card">
-      <h2>各层数据汇总</h2>
+  <!-- 3. GEO 搜索优化 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-amber">🔍</div>
+      <span class="card-title">3. GEO 搜索优化跟进</span>
+      <span class="card-tag tag-amber">跟进中</span>
+    </div>
+    <div class="card-body">
+      <p>通过《各游戏 GEO 搜索情况报告》，了解到这是提升用户充值助手心智的关键场景。届时将根据 SOP 要求，针对"充值省钱"、"月卡/首充"、"渠道对比"三个垂直场景启动内容优化工作，以提升助手在 AI 平台搜索中的曝光。</p>
+    </div>
+  </div>
+
+  <!-- 4. AI 客服智能管线 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-purple">💬</div>
+      <span class="card-title">4. AI 客服智能管线</span>
+      <span class="card-tag tag-purple">推进中</span>
+    </div>
+    <div class="card-body">
+      <p>成功开通 AgentX 测试平台权限，完成项目概念梳理与工作流初步学习，为智能客服管线落地储备工具能力。同步持续跟进 AI 客服中充值助手答案露出优化需求，积极使用内部 AI 工具进行运营文案生成与周报辅助，初步体验 AI 提效成果。</p>
+    </div>
+  </div>
+
+  <!-- 5. 外观付费 AI 触达 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-green">👗</div>
+      <span class="card-title">5. 外观付费 AI 触达项目推进</span>
+      <span class="card-tag tag-green">进行中</span>
+    </div>
+    <div class="card-body">
+      <p>完成技术方案研讨，明确实时特征与离线特征采集逻辑，确定"游戏日志 → 特征加工 → 算法模型 → 北斗推送至企微"的完整数据流转流程，产出《游戏外观付费实时特征》《游戏特征数据 - 开发文档》两份核心文档。攻克部分游戏权限限制导致的日志获取卡点，明确货币兑换关系及特征统计周期。技术侧三方协同分工明确，并行推进开发排期，北斗推送通用化接入无需额外开发。</p>
+    </div>
+  </div>
+
+  <!-- ═══ 策略落地数据 ═══ -->
+  <div class="section-title">
+    <div class="dot"></div>
+    策略落地数据
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>层级</th>
-            <th>名称</th>
-            <th>付费率区间</th>
-            <th>人数</th>
-            <th>占比</th>
-            <th>预测付费金额（元）</th>
+            <th>渠道</th>
+            <th>策略名称</th>
+            <th>推送人数</th>
+            <th>7日付费人数</th>
+            <th>7日付费金额</th>
+            <th>点击率</th>
+            <th>充值转化率</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>L1</td><td>低意愿用户</td><td>&lt; 25%</td><td>1,964</td><td>5.8%</td><td>97,429.40</td></tr>
-          <tr><td>L2</td><td>培育期用户</td><td>25% ~ 40%</td><td>2,207</td><td>6.5%</td><td>105,837.77</td></tr>
-          <tr><td>L3</td><td>成长期用户</td><td>40% ~ 60%</td><td>8,465</td><td>24.9%</td><td>387,512.26</td></tr>
-          <tr><td>L4</td><td>核心付费用户</td><td>60% ~ 70%</td><td>6,780</td><td>19.9%</td><td>332,146.77</td></tr>
-          <tr><td>L5</td><td>高意愿用户</td><td>70% ~ 80%</td><td>7,328</td><td>21.6%</td><td>368,494.41</td></tr>
-          <tr><td>L6</td><td>高价值用户</td><td>≥ 80%</td><td>7,242</td><td>21.3%</td><td>381,391.84</td></tr>
-          <tr><td><strong>合计</strong></td><td>—</td><td>—</td><td><strong>33,986</strong></td><td><strong>100%</strong></td><td><strong>1,672,812.44</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- 模型分层 -->
-  <div id="model" class="section">
-    <div class="page-title">模型分层方案</div>
-    <div class="page-subtitle">基于本地预测模型的付费意愿分层（定稿 v4）</div>
-
-    <div class="card">
-      <h2>分层设计原则</h2>
-      <ul>
-        <li>人数均衡性：核心层级（L3~L6）人数尽量接近，便于 A/B 测试</li>
-        <li>业务可解释性：分层边界与付费意愿的自然分布节点对齐</li>
-        <li>运营可操作性：层数控制在 6 层，策略可落地、易执行</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>各层运营策略</h2>
-      <table>
-        <thead>
-          <tr><th>层级</th><th>名称</th><th>用户特征</th><th>运营策略</th><th>优先级</th></tr>
-        </thead>
-        <tbody>
           <tr>
-            <td>L1</td><td>低意愿用户</td>
-            <td>付费意愿极弱，转化难度高</td>
-            <td>低成本触达，测试内容偏好</td>
-            <td><span class="tag orange">低</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-80-100%</td>
+            <td>6,133</td>
+            <td>1,297</td>
+            <td>292,278</td>
+            <td class="td-highlight">37.16%</td>
+            <td class="td-highlight">22.22%</td>
           </tr>
           <tr>
-            <td>L2</td><td>培育期用户</td>
-            <td>有一定意愿但尚未激活</td>
-            <td>优惠券 / 限时活动优先覆盖</td>
-            <td><span class="tag blue">中</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-70-80%</td>
+            <td>5,658</td>
+            <td>886</td>
+            <td>276,751</td>
+            <td>31.76%</td>
+            <td>17.03%</td>
           </tr>
           <tr>
-            <td>L3</td><td>成长期用户</td>
-            <td>成长阶段，付费行为不稳定</td>
-            <td>提升复购频次，建立付费习惯</td>
-            <td><span class="tag blue">中</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-60-70%</td>
+            <td>4,690</td>
+            <td>600</td>
+            <td>198,138</td>
+            <td>30.17%</td>
+            <td>14.36%</td>
           </tr>
           <tr>
-            <td>L4</td><td>核心付费用户</td>
-            <td>付费意愿稳定，核心用户群</td>
-            <td>维持留存，交叉销售，防流失预警</td>
-            <td><span class="tag green">高</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-40-60%</td>
+            <td>4,700</td>
+            <td>468</td>
+            <td>138,816</td>
+            <td>27.48%</td>
+            <td>11.20%</td>
           </tr>
           <tr>
-            <td>L5</td><td>高意愿用户</td>
-            <td>高付费意愿，接近顶层</td>
-            <td>会员体系绑定，提升客单价</td>
-            <td><span class="tag green">高</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-25-40%</td>
+            <td>855</td>
+            <td>42</td>
+            <td>24,552</td>
+            <td>22.92%</td>
+            <td>6.02%</td>
           </tr>
           <tr>
-            <td>L6</td><td>高价值用户</td>
-            <td>最高价值，付费高度稳定</td>
-            <td>VIP 专属服务，口碑传播</td>
-            <td><span class="tag green">高</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- 下周计划 -->
-  <div id="plan" class="section">
-    <div class="page-title">下周计划</div>
-    <div class="page-subtitle">待办事项与目标</div>
-
-    <div class="card">
-      <h2>重点任务</h2>
-      <ul>
-        <li>将 L1~L6 分层标签回写至用户数据库，供各业务线调用圈选</li>
-        <li>联合运营团队针对 L2 制定限时优惠活动方案</li>
-        <li>对 L5 / L6 高价值用户启动 VIP 触达流程</li>
-        <li>跟踪本节点实际付费数据，与模型预测值进行对比验证</li>
-        <li>输出模型精度评估报告（AUC / 付费率预测误差）</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>预期产出</h2>
-      <ul>
-        <li>用户分层标签数据包（Excel）</li>
-        <li>L2 培育方案 PPT</li>
-        <li>模型效果对比报告</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 历史归档 -->
-  <div id="archive" class="section">
-    <div class="page-title">历史归档</div>
-    <div class="page-subtitle">过往周报记录</div>
-
-    <div class="card">
-      <h2>周报记录</h2>
-      <table>
-        <thead>
-          <tr><th>周期</th><th>用户规模</th><th>预测付费金额</th><th>状态</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>本周（当前）</td><td>33,986</td><td>167.3万</td>
-            <td><span class="tag green">已完成</span></td>
-          </tr>
-          <tr>
-            <td>上周</td><td>—</td><td>—</td>
-            <td><span class="tag orange">待补充</span></td>
-          </tr>
-          <tr>
-            <td>上上周</td><td>—</td><td>—</td>
-            <td><span class="tag orange">待补充</span></td>
+            <td>企业微信</td>
+            <td class="td-name">0326-本地预测-小于25%</td>
+            <td>661</td>
+            <td>31</td>
+            <td>17,694</td>
+            <td>26.30%</td>
+            <td>8.96%</td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-
-</main>
-
-<script>
-  function showSection(id, el) {
-    // 切换内容区
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    // 切换导航高亮
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    el.classList.add('active');
-    // 阻止跳转
-    return false;
-  }
-</script>
-
-</body>
-</html>
+    <div class="insight-box">
+      📌 <strong>数据解读：</strong>模型分层效果显著，高付费概率层（80-100%）充值转化率达 <strong>22.22%</strong>，是低概率层（&lt;25%）的约 <strong>2.5 倍</strong>，
