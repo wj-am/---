@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>本周工作总结 & 下周待办</title>
+  <title>个人周报-汪吉</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -28,7 +28,6 @@
       margin-bottom: 36px;
     }
 
-    /* 分区标题 */
     .section-header {
       display: flex;
       align-items: center;
@@ -51,7 +50,6 @@
       background: #e5e5e5;
     }
 
-    /* 卡片 */
     .card {
       background: #f8f9fc;
       border-radius: 12px;
@@ -83,7 +81,6 @@
     }
     .card p:last-child { margin-bottom: 0; }
 
-    /* 版本表格 */
     .version-table {
       width: 100%;
       border-collapse: collapse;
@@ -116,31 +113,6 @@
     .tag-blue { background: #e8f0ff; color: #3a6fe0; }
     .tag-gray { background: #f0f0f5; color: #888; }
 
-    /* 亮点块 */
-    .highlight-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .highlight-item {
-      background: #fff;
-      border-radius: 8px;
-      padding: 14px 16px;
-      border: 1px solid #eee;
-    }
-    .highlight-item .hi-label {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 4px;
-    }
-    .highlight-item .hi-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1a1a2e;
-    }
-
-    /* 数据表 */
     .data-table {
       width: 100%;
       border-collapse: collapse;
@@ -162,44 +134,8 @@
     .data-table tr:last-child td { border-bottom: none; }
     .data-table .num { font-weight: 600; color: #3a6fe0; }
     .data-table .highlight-cell { font-weight: 600; color: #2bab74; }
+    .data-table .low-cell { font-weight: 600; color: #f76f8e; }
 
-    /* VOC 发现块 */
-    .voc-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .voc-item {
-      background: #fff;
-      border-radius: 8px;
-      padding: 14px 16px;
-      border: 1px solid #eee;
-    }
-    .voc-item .voc-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .voc-item .voc-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: #f7964f;
-      flex-shrink: 0;
-    }
-    .voc-item .voc-dot.blue { background: #4f8ef7; }
-    .voc-item .voc-dot.red { background: #f76f8e; }
-    .voc-item .voc-dot.purple { background: #9b6cf7; }
-    .voc-item p {
-      font-size: 13px;
-      color: #666;
-    }
-
-    /* 下周待办 todo */
     .todo-list {
       list-style: none;
       margin-top: 10px;
@@ -239,12 +175,39 @@
       color: #7a5a1e;
       margin-top: 10px;
     }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .stat-item {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1px solid #eee;
+      text-align: center;
+    }
+    .stat-item .stat-label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .stat-item .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+    .stat-item .stat-value.blue { color: #4f8ef7; }
+    .stat-item .stat-value.green { color: #3dbe8e; }
+    .stat-item .stat-value.orange { color: #f7964f; }
   </style>
 </head>
 <body>
 
-  <div class="page-title">📋 个人周报-汪吉</div>
-  <div class="page-subtitle">3.30.-4.3 · iOS充值业务</div>
+  <div class="page-title">📋 本周工作总结 & 下周待办</div>
+  <div class="page-subtitle">4.7 - 4.10 · iOS空中充值业务</div>
 
   <!-- ===== 本周工作 ===== -->
   <div class="section-header">
@@ -254,9 +217,25 @@
 
   <!-- 客服管线 -->
   <div class="card">
-    <div class="card-title"><span class="emoji">🤖</span> AI智能客服管线全面上架（核心重点）</div>
-    <p>依托第五人格"我的客服"入口，以 Dify 子 Agent 为引擎，构建 VOC 三级向量判断分流体系。命中判罚/举报类问题直接调用对应接口实现 0 人工介入闭环；其余问题通过 SOP 卡片 + 用户问题描述卡片前置处理，标准化问题自助解决，非标问题结构化透传人工，实现客服效率与人工效率双向提升。</p>
-    <p>在管线上架基础上，同步深化 AgentX 平台应用，构建活动关键数据监控与自动告警工作流原型，验证低代码工具在"数据异常→自动识别→告警触达"链路上的可行性；推进"用户提问→智能识别意图→自动推荐充值助手"客服侧自动化流程，解决助手答案露出依赖人工主动推送、露出率低的问题；整理智能管线关键节点文档，建立标准化推进 SOP。</p>
+    <div class="card-title"><span class="emoji">🤖</span> AI智能客服管线 —— VOC注释、互斥调优</div>
+    <p>对基于 LLM 的 VOC 召回模型完成本轮VOC注释说明、互斥条件调优迭代。完成后进行效果验证，整体召回率从25%提升至 <strong>74.4%</strong>，准确率从54%提升至 <strong>60%</strong>，已在第五AI智能解决群同步阶段性进展。下一步重点攻关方向为准确率提升至 <strong>90%+</strong>，将持续深入分析误判根因，制定并执行下轮优化方案。</p>
+
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-label">整体召回率</div>
+        <div class="stat-value green">74.4%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">当前准确率</div>
+        <div class="stat-value orange">60%</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">目标准确率</div>
+        <div class="stat-value blue">90%+</div>
+      </div>
+    </div>
+
+    <p>在模型调优基础上，持续推进管线迭代规划，V2.0 / V3.0 版本核心方向已明确：</p>
     <table class="version-table">
       <thead>
         <tr>
@@ -283,47 +262,96 @@
     </table>
   </div>
 
-  <!-- 充值场景来单 -->
-  <div class="card accent-orange">
-    <div class="card-title"><span class="emoji">🎫</span> 充值场景客服来单专项总结</div>
-    <p>本周基于约 <strong>4,293 条</strong>充值相关交互记录进行系统梳理，识别出六大高频问题场景。</p>
-    <div class="voc-grid">
-      <div class="voc-item">
-        <div class="voc-title"><span class="voc-dot"></span>优惠券被吞（600+ 条）</div>
-        <p>支付中断（切换方式/网络异常/主动退出）后券状态被误标为已使用；7折券已下线，满减券、9折券、福利金等同类机制问题仍存在。</p>
-      </div>
-      <div class="voc-item">
-        <div class="voc-title"><span class="voc-dot blue"></span>充值路径断点（210 条）</div>
-        <p>入口找不到（112条）+ 待支付订单找不到（98条），用户在充值流程中频繁流失，路径设计需优化。</p>
-      </div>
-      <div class="voc-item">
-        <div class="voc-title"><span class="voc-dot red"></span>高升级率三大场景</div>
-        <p>无法充值、充值错误、充值未到账工单占比远高于人工线占比，人工侧处理能力存在边界，需链路层面优化。</p>
-      </div>
-      <div class="voc-item">
-        <div class="voc-title"><span class="voc-dot purple"></span>规则透明度不足（~110 条）</div>
-        <p>充值方式、返利规则、渠道限制等用户找不到答案主动咨询，属可通过 FAQ/页面优化直接消除的无效来单。</p>
-      </div>
-    </div>
-    <div class="tip-box">后续重点：针对上述四类问题已梳理运营优化方向，将在专项报告中进一步提出具体建议。</div>
-  </div>
-
-  <!-- AI本地预测 -->
+  <!-- 精细化推送 -->
   <div class="card accent-green">
-    <div class="card-title"><span class="emoji">📊</span> AI本地预测策略迭代优化</div>
-    <p>基于上周推送数据，完成 L1-L6 各层转化效果复盘分析，规划下轮推送策略向 L1-L3 层集中资源，并在 L2/L3 层设计内容/时机 A/B 实验，验证差异化触达方式对转化效率的影响。</p>
+    <div class="card-title"><span class="emoji">📊</span> 精细化推送策略配置与优化</div>
+    <p>配置并上线"0402-二单新客福利金提醒"新策略，下周将继续新增精细化场景策略的反馈，目标覆盖存量拉新/复购流失。同步处理"分享福利金未到账"补发问题，并完成4种优惠券共计 <strong>4万张</strong>库存补充，保障活动体验连续性。</p>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>推送渠道</th><th>策略名称</th><th>推送人数</th><th>7日付费人数</th><th>7日付费金额</th><th>点击率</th><th>充值转化率</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>企业微信群推</td>
+          <td>0409-ios付费未转化企微</td>
+          <td class="num">67,760</td>
+          <td class="num">209</td>
+          <td class="num">¥10,796</td>
+          <td class="low-cell">1.60%</td>
+          <td class="low-cell">0.31%</td>
+        </tr>
+        <tr>
+          <td>企业微信群推</td>
+          <td>0402-ios付费未转化企微</td>
+          <td class="num">43,755</td>
+          <td class="num">1,507</td>
+          <td class="num">¥301,682</td>
+          <td class="highlight-cell">6.40%</td>
+          <td class="highlight-cell">3.56%</td>
+        </tr>
+        <tr>
+          <td>企业微信群推</td>
+          <td>0402-ios付费未转化企微</td>
+          <td class="num">43,450</td>
+          <td class="num">1,488</td>
+          <td class="num">¥289,312</td>
+          <td class="highlight-cell">6.52%</td>
+          <td class="highlight-cell">3.53%</td>
+        </tr>
+        <tr>
+          <td>企业微信群推</td>
+          <td>0327-天降福利金推送测试</td>
+          <td class="num">17,192</td>
+          <td class="num">531</td>
+          <td class="num">¥68,819</td>
+          <td class="highlight-cell">8.48%</td>
+          <td class="highlight-cell">3.31%</td>
+        </tr>
+        <tr>
+          <td>企业微信群推</td>
+          <td>0402-iOS二单新客福利金提醒</td>
+          <td class="num">432</td>
+          <td class="num">7</td>
+          <td class="num">¥323</td>
+          <td class="highlight-cell">10.51%</td>
+          <td class="num">1.71%</td>
+        </tr>
+        <tr>
+          <td>全量短信</td>
+          <td>0402-ios付费未转化-短信</td>
+          <td class="num">151,208</td>
+          <td class="num">234</td>
+          <td class="num">¥47,349</td>
+          <td class="low-cell">0.32%</td>
+          <td class="low-cell">0.15%</td>
+        </tr>
+        <tr>
+          <td>全量短信</td>
+          <td>0409-ios付费未转化-短信</td>
+          <td class="num">103,756</td>
+          <td class="num">42</td>
+          <td class="num">¥5,028</td>
+          <td class="low-cell">0.14%</td>
+          <td class="low-cell">0.04%</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip-box">企业微信渠道点击率与转化率显著优于短信；0402 策略表现突出，转化率达 3.5%+；短信推送量大，ROI达到2以上，实现基础目标，后续将配合节点继续跟投。</div>
   </div>
 
   <!-- 外观付费 -->
   <div class="card accent-purple">
     <div class="card-title"><span class="emoji">🚀</span> 外观付费AI触达项目开发跟进</div>
-    <p>跟进三方开发排期，确认各端里程碑节点，重点关注游戏日志采集与特征加工模块进度；协同算法侧完成模型训练所需特征定义文档最终确认；提前规划测试方案与上线评估指标，确保项目具备可量化验收标准。</p>
+    <p>跟进三方开发排期，确认各端里程碑节点，重点关注游戏日志采集与特征加工模块进度；协同算法侧完成模型训练所需特征定义文档最终确认；目前第五测试方案已完成，下周上线评估指标，确保项目具备可量化验收标准。</p>
   </div>
 
-  <!-- 福利金 -->
+  <!-- 天降福利金 -->
   <div class="card accent-teal">
-    <div class="card-title"><span class="emoji">🎁</span> AI天降福利金实验数据跟进</div>
-    <p>持续追踪随机探索实验数据，初步评估不同补贴额度对各潜力层人群转化效果差异，收集实验反馈，为后续智能补贴策略参数调优提供数据支撑。</p>
+    <div class="card-title"><span class="emoji">🎁</span> AI天降福利金推送机制分析</div>
+    <p>与算法同学对齐天降推送触发逻辑，深入分析北斗推送优化方案，将持续触达潜在用户。</p>
+    <p>同步持续追踪随机探索实验数据，初步评估不同补贴额度对各潜力层人群转化效果差异，收集实验反馈，为后续智能补贴策略参数调优提供数据支撑。</p>
   </div>
 
   <!-- 新客二单 -->
@@ -332,48 +360,16 @@
     <p>iOS 端新客二单项目正式配置上线。用户首单后可获"首单红包"（福利金概率红包，100% 中奖，最高 100 元），金额按 VIP 等级差异化分布，支持所有福利金抵扣场景使用。</p>
   </div>
 
-  <!-- 策略数据 -->
-  <div class="card">
-    <div class="card-title"><span class="emoji">📈</span> 本周策略投放数据</div>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>渠道</th><th>策略名称</th><th>推送人数</th><th>7日付费人数</th><th>7日付费金额</th><th>点击率</th><th>充值转化率</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>企业微信</td>
-          <td>0402-ios付费未转化企微</td>
-          <td class="num">43,755</td>
-          <td class="num">863</td>
-          <td class="num">¥164,175</td>
-          <td class="highlight-cell">4.26%</td>
-          <td class="highlight-cell">2.04%</td>
-        </tr>
-        <tr>
-          <td>企业微信</td>
-          <td>0402-ios付费未转化企微</td>
-          <td class="num">43,450</td>
-          <td class="num">778</td>
-          <td class="num">¥144,198</td>
-          <td class="highlight-cell">4.31%</td>
-          <td class="highlight-cell">1.87%</td>
-        </tr>
-        <tr>
-          <td>全量短信</td>
-          <td>0402-ios付费未转化-短信</td>
-          <td class="num">151,208</td>
-          <td class="num">171</td>
-          <td class="num">¥31,939</td>
-          <td style="color:#f76f8e;font-weight:600;">0.08%</td>
-          <td style="color:#f76f8e;font-weight:600;">0.11%</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tip-box">企业微信渠道点击率与转化率显著优于短信；短信推送量最大但转化极低，后续需重点评估短信渠道投入产出比。</div>
+  <!-- 协作事务 -->
+  <div class="card accent-orange">
+    <div class="card-title"><span class="emoji">📋</span> 协作沟通与事务推进</div>
+    <p>
+      <strong>KPI对齐：</strong>本月起新增"获客人数渗透率目标"与"留存目标"两项指标，已完成信息同步与理解。<br/>
+      <strong>节点报备：</strong>获取4月付费节点公告并完成中台报备。<br/>
+      <strong>权限申请：</strong>完成报表权限与网易支付数据看板权限申请。<br/>
+     
+    </p>
   </div>
-
 
   <!-- ===== 下周待办 ===== -->
   <div class="section-header">
@@ -383,9 +379,16 @@
 
   <!-- 客服管线 V2.0 -->
   <div class="card">
-    <div class="card-title"><span class="emoji">🤖</span> AI智能客服管线 V2.0 落地推进（核心重点）</div>
+    <div class="card-title"><span class="emoji">🤖</span> VOC模型准确率攻坚 & 管线 V2.0 落地推进（核心重点）</div>
 
-    <div class="sub-title">① 高置信度向量库快速匹配通道外放</div>
+    <div class="sub-title">① VOC 准确率攻坚（目标 90%+）</div>
+    <ul class="todo-list">
+      <li>深入分析当前准确率 60% 的根因，梳理高频误判类目与边界 case</li>
+      <li>制定分类优化方案（边界 case 清洗、标注规范统一、分类阈值调整等）</li>
+      <li>执行下轮调优并完成效果验证，持续在群内同步进展</li>
+    </ul>
+
+    <div class="sub-title">② 高置信度向量库快速匹配通道外放</div>
     <ul class="todo-list">
       <li>梳理 VOC 向量库中高频且置信度稳定的问题类目，圈定首批外放范围</li>
       <li>与技术侧确认向量匹配阈值标准（相似度阈值、top-k 召回数等）</li>
@@ -393,27 +396,27 @@
       <li>输出外放后 token 节省量与响应时速预估测算</li>
     </ul>
 
-    <div class="sub-title">② VOC 标准化维护更新机制建立</div>
+    <div class="sub-title">③ VOC 标准化维护更新机制建立</div>
     <ul class="todo-list">
       <li>制定 VOC 分类/注释/槽位/分流类型/转人工信息卡片标准化维护 SOP</li>
-      <li>明确维护责任人与更新频率（双周常规更新 + 重大业务变更触发更新）</li>
+      <li>明确维护更新频率（双周常规更新 + 重大业务变更触发更新双轨机制）</li>
       <li>建立词条新增/修改/下线审核流程，防止向量库词条失效或污染导致分流错乱</li>
     </ul>
 
-    <div class="sub-title">③ 长期监测优化机制搭建</div>
+    <div class="sub-title">④ 长期监测优化机制搭建</div>
     <ul class="todo-list">
       <li>搭建 VOC 准确率、知识库回复有效解决率、互斥机制三条核心监测链路</li>
       <li>确定指标看板形式与负责人，建立定期复盘节奏</li>
     </ul>
   </div>
 
-  <!-- AI 预测 -->
+  <!-- 精细化推送 -->
   <div class="card accent-green">
-    <div class="card-title"><span class="emoji">📊</span> AI本地预测策略 A/B 实验推进</div>
+    <div class="card-title"><span class="emoji">📊</span> 精细化推送策略扩充</div>
     <ul class="todo-list">
-      <li>正式启动 L2/L3 层内容/时机 A/B 实验，设计实验分组与对照逻辑</li>
-      <li>持续观察 L1-L3 层集中资源投放后的转化效果，与历史基线对比评估策略收益</li>
-      <li>输出初版实验结论，为下轮策略迭代提供依据</li>
+      <li>设计并配置更多精细化场景推送策略，重点围绕企微渠道转化率提升</li>
+      <li>结合"获客渗透率"与"留存"建立数据跟踪视角，了解看板数据口径</li>
+      <li>初步思考提升方向，为下月策略规划提供输入</li>
     </ul>
   </div>
 
@@ -421,15 +424,14 @@
   <div class="card accent-purple">
     <div class="card-title"><span class="emoji">🚀</span> 外观付费AI触达项目推进</div>
     <ul class="todo-list">
-      <li>重点跟进游戏日志采集与特征加工模块开发进度，确保不影响整体排期</li>
       <li>协同技术侧完成特征工程初版方案联调验证，排查数据流转各节点异常风险</li>
       <li>推进测试方案细化落地，明确上线评估指标的数据口径与采集方式</li>
     </ul>
   </div>
 
-  <!-- 福利金 -->
+  <!-- 天降福利金 -->
   <div class="card accent-teal">
-    <div class="card-title"><span class="emoji">🎁</span> AI天降福利金实验复盘</div>
+    <div class="card-title"><span class="emoji">🎁</span> 天降推送时间窗口优化推进 & 实验复盘</div>
     <ul class="todo-list">
       <li>汇总本阶段随机探索实验数据，完成不同补贴额度对各潜力层人群转化差异系统性分析</li>
       <li>输出实验阶段性结论，提出智能补贴策略参数调优建议</li>
