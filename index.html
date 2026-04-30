@@ -1,456 +1,1052 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>个人周报-汪吉</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: #ffffff;
-      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-      color: #1a1a2e;
-      padding: 40px;
-      line-height: 1.7;
-    }
-    .page-title {
-      text-align: center;
-      font-size: 26px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 6px;
-      letter-spacing: 2px;
-    }
-    .page-subtitle {
-      text-align: center;
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 36px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI自动化进展总汇报</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 32px 0 16px 0;
-    }
-    .section-header .section-badge {
-      background: #1a1a2e;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 3px 14px;
-      border-radius: 20px;
-      letter-spacing: 1px;
-      white-space: nowrap;
-    }
-    .section-header .section-line {
-      flex: 1;
-      height: 1px;
-      background: #e5e5e5;
-    }
+  :root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0d0d1a;
+    --bg-card: #13131f;
+    --bg-card-hover: #1a1a2e;
+    --accent-blue: #4F8EF7;
+    --accent-green: #00D4AA;
+    --accent-yellow: #F5C842;
+    --accent-red: #FF6B6B;
+    --accent-purple: #A78BFA;
+    --text-primary: #e8e8f0;
+    --text-secondary: #8888aa;
+    --text-muted: #55556a;
+    --border: rgba(79, 142, 247, 0.15);
+    --border-bright: rgba(79, 142, 247, 0.4);
+  }
 
-    .card {
-      background: #f8f9fc;
-      border-radius: 12px;
-      padding: 22px 26px;
-      margin-bottom: 16px;
-      border-left: 4px solid #4f8ef7;
-    }
-    .card.accent-green { border-left-color: #3dbe8e; }
-    .card.accent-orange { border-left-color: #f7964f; }
-    .card.accent-purple { border-left-color: #9b6cf7; }
-    .card.accent-pink { border-left-color: #f76f8e; }
-    .card.accent-teal { border-left-color: #3dbebe; }
+  html { scroll-behavior: smooth; }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .card-title .emoji { font-size: 18px; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
 
-    .card p {
-      font-size: 14px;
-      color: #444;
-      margin-bottom: 8px;
-    }
-    .card p:last-child { margin-bottom: 0; }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    .version-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      font-size: 13px;
-    }
-    .version-table th {
-      background: #eef1fa;
-      color: #555;
-      font-weight: 600;
-      padding: 8px 12px;
-      text-align: left;
-    }
-    .version-table td {
-      padding: 9px 12px;
-      border-bottom: 1px solid #eee;
-      color: #444;
-      vertical-align: top;
-    }
-    .version-table tr:last-child td { border-bottom: none; }
-    .tag {
-      display: inline-block;
-      padding: 2px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .tag-green { background: #e6f9f2; color: #2bab74; }
-    .tag-blue { background: #e8f0ff; color: #3a6fe0; }
-    .tag-gray { background: #f0f0f5; color: #888; }
+  nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
 
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 12px;
-    }
-    .data-table th {
-      background: #eef1fa;
-      color: #555;
-      font-weight: 600;
-      padding: 9px 12px;
-      text-align: left;
-    }
-    .data-table td {
-      padding: 9px 12px;
-      border-bottom: 1px solid #eee;
-      color: #444;
-    }
-    .data-table tr:last-child td { border-bottom: none; }
-    .data-table .num { font-weight: 600; color: #3a6fe0; }
-    .data-table .highlight-cell { font-weight: 600; color: #2bab74; }
-    .data-table .low-cell { font-weight: 600; color: #f76f8e; }
+  nav a:hover {
+    color: var(--accent-blue);
+    background: rgba(79, 142, 247, 0.1);
+  }
 
-    .todo-list {
-      list-style: none;
-      margin-top: 10px;
-    }
-    .todo-list li {
-      font-size: 14px;
-      color: #444;
-      padding: 6px 0 6px 22px;
-      border-bottom: 1px dashed #eee;
-      position: relative;
-    }
-    .todo-list li:last-child { border-bottom: none; }
-    .todo-list li::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 13px;
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
-      border: 2px solid #4f8ef7;
-    }
+  nav .nav-logo {
+    color: var(--accent-blue);
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 16px;
+    letter-spacing: 0.5px;
+  }
 
-    .sub-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #333;
-      margin: 14px 0 6px 0;
-    }
+  .page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px 80px;
+  }
 
-    .tip-box {
-      background: #fff8e8;
-      border-left: 3px solid #f7964f;
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: #7a5a1e;
-      margin-top: 10px;
-    }
+  section { margin-bottom: 60px; }
 
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 9px;
-      margin: 9px 0;
-    }
-    .stat-item {
-      background: #fff;
-      border-radius: 8px;
-      padding: 12px 16px;
-      border: 1px solid #eee;
-      text-align: center;
-    }
-    .stat-item .stat-label {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 4px;
-    }
-    .stat-item .stat-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: #1a1a2e;
-    }
-    .stat-item .stat-value.blue { color: #4f8ef7; }
-    .stat-item .stat-value.green { color: #3dbe8e; }
-    .stat-item .stat-value.orange { color: #f7964f; }
-  </style>
+  .hero {
+    text-align: center;
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(79, 142, 247, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(79, 142, 247, 0.1);
+    border: 1px solid rgba(79, 142, 247, 0.3);
+    color: var(--accent-blue);
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e8e8f0 0%, #4F8EF7 60%, #00D4AA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    color: var(--text-secondary);
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .hero-quote {
+    max-width: 760px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(79,142,247,0.08), rgba(0,212,170,0.06));
+    border: 1px solid var(--border-bright);
+    border-left: 3px solid var(--accent-blue);
+    border-radius: 12px;
+    padding: 20px 28px;
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: left;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border-bright), transparent);
+  }
+
+  .section-subtitle {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 20px;
+    padding-left: 4px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.25s ease;
+  }
+
+  .card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(79, 142, 247, 0.08);
+  }
+
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .card-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .agent-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .agent-card.blue::before { background: var(--accent-blue); }
+  .agent-card.green::before { background: var(--accent-green); }
+  .agent-card.yellow::before { background: var(--accent-yellow); }
+
+  .agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(79, 142, 247, 0.1);
+    border-color: var(--border-bright);
+  }
+
+  .agent-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .agent-card-desc {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .agent-metric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .metric-big {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent-green);
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(to right, var(--accent-blue), var(--accent-green));
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    transition: all 0.25s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-bright);
+    box-shadow: 0 6px 24px rgba(79,142,247,0.08);
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-number.blue { color: var(--accent-blue); }
+  .stat-number.green { color: var(--accent-green); }
+  .stat-number.yellow { color: var(--accent-yellow); }
+  .stat-number.purple { color: var(--accent-purple); }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .table-wrap {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead tr {
+    background: rgba(79, 142, 247, 0.12);
+  }
+
+  thead th {
+    padding: 14px 18px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent-blue);
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s;
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(255,255,255,0.02);
+  }
+
+  tbody tr:hover { background: rgba(79, 142, 247, 0.06); }
+
+  tbody td {
+    padding: 13px 18px;
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .tag-green { background: rgba(0,212,170,0.12); color: var(--accent-green); border: 1px solid rgba(0,212,170,0.25); }
+  .tag-yellow { background: rgba(245,200,66,0.12); color: var(--accent-yellow); border: 1px solid rgba(245,200,66,0.25); }
+  .tag-red { background: rgba(255,107,107,0.12); color: var(--accent-red); border: 1px solid rgba(255,107,107,0.25); }
+  .tag-blue { background: rgba(79,142,247,0.12); color: var(--accent-blue); border: 1px solid rgba(79,142,247,0.25); }
+
+  .priority-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .p0 { background: rgba(255,107,107,0.15); color: var(--accent-red); border: 1px solid rgba(255,107,107,0.3); }
+  .p1 { background: rgba(245,200,66,0.15); color: var(--accent-yellow); border: 1px solid rgba(245,200,66,0.3); }
+  .p2 { background: rgba(79,142,247,0.15); color: var(--accent-blue); border: 1px solid rgba(79,142,247,0.3); }
+
+  .highlight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .highlight-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: all 0.2s;
+  }
+
+  .highlight-item:hover {
+    border-color: var(--border-bright);
+    transform: translateX(4px);
+  }
+
+  .highlight-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .highlight-content { flex: 1; }
+  .highlight-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .highlight-desc { color: var(--text-secondary); font-size: 13px; }
+
+  .plan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .plan-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: all 0.25s;
+  }
+
+  .plan-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-bright);
+    box-shadow: 0 6px 24px rgba(79,142,247,0.08);
+  }
+
+  .plan-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .plan-card-title {
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .plan-card-desc {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-bright), transparent);
+    margin: 40px 0;
+  }
+
+  .final-quote {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(79,142,247,0.06), rgba(0,212,170,0.04));
+    border: 1px solid var(--border-bright);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-quote::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(79,142,247,0.05) 0%, transparent 70%);
+  }
+
+  .final-quote p {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.8;
+    color: var(--text-primary);
+    position: relative;
+  }
+
+  @media (max-width: 768px) {
+    .page-wrapper { padding: 70px 20px 40px; }
+    nav { padding: 0 16px; gap: 4px; }
+    nav a { padding: 4px 10px; font-size: 12px; }
+    .hero h1 { font-size: 28px; }
+    .card-grid-3 { grid-template-columns: 1fr; }
+    .card-grid-2 { grid-template-columns: 1fr; }
+    .plan-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="page-title">📋 个人周报-汪吉</div>
-  <div class="page-subtitle">4.7 - 4.10 · iOS空中充值业务</div>
+<!-- 导航 -->
+<nav>
+  <span class="nav-logo">🤖 AI自动化</span>
+  <a href="#overview">总览</a>
+  <a href="#analysis">数据分析</a>
+  <a href="#strategy">策略生成</a>
+  <a href="#overseas">海外推送</a>
+  <a href="#plan">下周规划</a>
+</nav>
 
-  <!-- ===== 本周工作 ===== -->
-  <div class="section-header">
-    <span class="section-badge">本周工作</span>
-    <div class="section-line"></div>
-  </div>
+<div class="page-wrapper">
 
-  <!-- 客服管线 -->
-  <div class="card">
-    <div class="card-title"><span class="emoji">🤖</span> AI智能客服管线 —— VOC注释、互斥调优</div>
-    <p>对基于 LLM 的 VOC 召回模型完成本轮VOC注释说明、互斥条件调优迭代。完成后进行效果验证，整体召回率从25%提升至 <strong>74.4%</strong>，准确率从54%提升至 <strong>60%</strong>，已在第五AI智能解决群同步阶段性进展。下一步重点攻关方向为准确率提升至 <strong>90%+</strong>，将持续深入分析误判根因，制定并执行下轮优化方案。</p>
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="hero-badge">🚀 本周进展汇报</div>
+    <h1>AI 自动化进展总汇报</h1>
+    <p class="hero-sub">数据分析 · 策略生成 · 海外推送 · 三条产线从 0 到 1</p>
+    <div class="hero-quote">
+      💡 <strong>本周完成三条AI自动化产线的从0到1搭建</strong>——数据分析、策略生成、海外推送，整体人效提升60-90%，累计覆盖9大分析模块 + 9大策略能力 + 4大推送渠道。
+    </div>
+  </section>
 
-    <div class="stat-grid">
-      <div class="stat-item">
-        <div class="stat-label">整体召回率</div>
-        <div class="stat-value green">74.4%</div>
+  <!-- 下周规划预览 -->
+  <section id="plan-preview">
+    <div class="section-title">🗓️ 下周规划预览</div>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <span class="priority-tag p0">P0</span>
+          <span class="plan-card-title">数据分析 Agent 定时化</span>
+        </div>
+        <p class="plan-card-desc">月报自动触发，无需手动运行，异常指标自动告警</p>
       </div>
-      <div class="stat-item">
-        <div class="stat-label">当前准确率</div>
-        <div class="stat-value orange">60%</div>
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <span class="priority-tag p0">P0</span>
+          <span class="plan-card-title">海外推送流水线落地</span>
+        </div>
+        <p class="plan-card-desc">公告抓取 → 多语言生成 → 各渠道输出一键完成</p>
       </div>
-      <div class="stat-item">
-        <div class="stat-label">目标召回率</div>
-        <div class="stat-value green">90%+</div>
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <span class="priority-tag p1">P1</span>
+          <span class="plan-card-title">策略生成器数据更新</span>
+        </div>
+        <p class="plan-card-desc">接入 4/29 最新 DM 数据，CTR 参考保持最新</p>
       </div>
-      <div class="stat-item">
-        <div class="stat-label">目标准确率</div>
-        <div class="stat-value blue">90%+</div>
+      <div class="plan-card">
+        <div class="plan-card-header">
+          <span class="priority-tag p2">P2</span>
+          <span class="plan-card-title">三 Agent 打通闭环</span>
+        </div>
+        <p class="plan-card-desc">分析 → 策略 → 推送，探索端到端全链路流程</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 总体概况 -->
+  <section id="overview">
+    <div class="section-title">📊 三大 Agent 全景速览</div>
+    <div class="card-grid-3" style="margin-bottom:16px;">
+      <div class="agent-card blue">
+        <div class="agent-card-title">📊 数据分析 Agent</div>
+        <div class="agent-card-desc">9模块自动分析，覆盖大盘、渠道、分层、策略、漏斗等全维度</div>
+        <div class="agent-metric">
+          <div>
+            <div class="metric-big">97%</div>
+            <div class="metric-label">人效提升</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;color:var(--text-secondary);">8-13h → <strong style="color:var(--accent-green)">3min</strong></div>
+            <div style="margin-top:4px;"><span class="tag tag-green">🟢 数据层全自动</span></div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:97%"></div></div>
+      </div>
+      <div class="agent-card green">
+        <div class="agent-card-title">📝 策略自动化 Agent</div>
+        <div class="agent-card-desc">文案生成 + 效果分析 + 看板，5套模板 + 106条历史文案参考</div>
+        <div class="agent-metric">
+          <div>
+            <div class="metric-big">83%</div>
+            <div class="metric-label">人效提升</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;color:var(--text-secondary);">2h → <strong style="color:var(--accent-green)">20min</strong></div>
+            <div style="margin-top:4px;"><span class="tag tag-green">🟢 生产层全自动</span></div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:83%"></div></div>
+      </div>
+      <div class="agent-card yellow">
+        <div class="agent-card-title">🌏 海外推送 Agent</div>
+        <div class="agent-card-desc">多语言内容生产 + 4渠道输出，终结手工 HTML / JSON 配置</div>
+        <div class="agent-metric">
+          <div>
+            <div class="metric-big">80%</div>
+            <div class="metric-label">人效提升</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;color:var(--text-secondary);">3h → <strong style="color:var(--accent-green)">20min</strong></div>
+            <div style="margin-top:4px;"><span class="tag tag-yellow">🟡 核心环节自动</span></div>
+          </div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
       </div>
     </div>
 
-    <p>在模型调优基础上，持续推进管线迭代规划，V2.0 / V3.0 版本核心方向已明确：</p>
-    <table class="version-table">
-      <thead>
-        <tr>
-          <th>版本</th><th>状态</th><th>核心内容</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>V1.0</strong></td>
-          <td><span class="tag tag-green">✅ 已上线</span></td>
-          <td>基础客服管线全面上架，VOC 三级分流、SOP 卡片、判罚/举报直连接口全量部署</td>
-        </tr>
-        <tr>
-          <td><strong>V2.0</strong></td>
-          <td><span class="tag tag-blue">🔄 规划中</span></td>
-          <td>高置信度向量库快速匹配通道外放（提速/降本/提精准）、VOC 标准化维护更新机制、VOC 准确率/有效解决率/互斥机制长期监测体系</td>
-        </tr>
-        <tr>
-          <td><strong>V3.0</strong></td>
-          <td><span class="tag tag-gray">📐 设计中</span></td>
-          <td>各 VOC 场景 Skills 全面接入子 Agent，槽位信息匹配全自助完成，彻底去除人工信息收集介入</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- 综合说明 -->
+    <div class="card" style="background:rgba(79,142,247,0.04);">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;">
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;">覆盖业务场景</div>
+          <div style="font-weight:700;font-size:14px;">国内分析 / 国内策略 / 海外推送</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;">人工退出的环节</div>
+          <div style="font-weight:700;font-size:14px;">取数 · 清洗 · 翻译 · 文案 · 格式转换</div>
+        </div>
+        <div>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px;">人工保留的环节</div>
+          <div style="font-weight:700;font-size:14px;">结论判断 · 策略立项 · 审核发布</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- 精细化推送 -->
-  <div class="card accent-green">
-    <div class="card-title"><span class="emoji">📊</span> 精细化推送策略配置与优化</div>
-    <p>配置并上线"0402-二单新客福利金提醒"新策略，下周将继续新增精细化场景策略的反馈，目标覆盖存量拉新/复购流失。同步处理"分享福利金未到账"补发问题，并完成4种优惠券共计 <strong>4万张</strong>库存补充，保障活动体验连续性。</p>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>推送渠道</th><th>策略名称</th><th>推送人数</th><th>7日付费人数</th><th>7日付费金额</th><th>点击率</th><th>充值转化率</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>企业微信群推</td>
-          <td>0409-ios付费未转化企微</td>
-          <td class="num">67,760</td>
-          <td class="num">209</td>
-          <td class="num">¥10,796</td>
-          <td class="low-cell">1.60%</td>
-          <td class="low-cell">0.31%</td>
-        </tr>
-        <tr>
-          <td>企业微信群推</td>
-          <td>0402-ios付费未转化企微</td>
-          <td class="num">43,755</td>
-          <td class="num">1,507</td>
-          <td class="num">¥301,682</td>
-          <td class="highlight-cell">6.40%</td>
-          <td class="highlight-cell">3.56%</td>
-        </tr>
-        <tr>
-          <td>企业微信群推</td>
-          <td>0402-ios付费未转化企微</td>
-          <td class="num">43,450</td>
-          <td class="num">1,488</td>
-          <td class="num">¥289,312</td>
-          <td class="highlight-cell">6.52%</td>
-          <td class="highlight-cell">3.53%</td>
-        </tr>
-        <tr>
-          <td>企业微信群推</td>
-          <td>0327-天降福利金推送测试</td>
-          <td class="num">17,192</td>
-          <td class="num">531</td>
-          <td class="num">¥68,819</td>
-          <td class="highlight-cell">8.48%</td>
-          <td class="highlight-cell">3.31%</td>
-        </tr>
-        <tr>
-          <td>企业微信群推</td>
-          <td>0402-iOS二单新客福利金提醒</td>
-          <td class="num">432</td>
-          <td class="num">7</td>
-          <td class="num">¥323</td>
-          <td class="highlight-cell">10.51%</td>
-          <td class="num">1.71%</td>
-        </tr>
-        <tr>
-          <td>全量短信</td>
-          <td>0402-ios付费未转化-短信</td>
-          <td class="num">151,208</td>
-          <td class="num">234</td>
-          <td class="num">¥47,349</td>
-          <td class="low-cell">0.32%</td>
-          <td class="low-cell">0.15%</td>
-        </tr>
-        <tr>
-          <td>全量短信</td>
-          <td>0409-ios付费未转化-短信</td>
-          <td class="num">103,756</td>
-          <td class="num">42</td>
-          <td class="num">¥5,028</td>
-          <td class="low-cell">0.14%</td>
-          <td class="low-cell">0.04%</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="tip-box">企业微信渠道点击率与转化率显著优于短信；0402 策略表现突出，转化率达 3.5%+，后续将持续关注策略情况。</div>
-  </div>
+  <div class="divider"></div>
 
-  <!-- 外观付费 -->
-  <div class="card accent-purple">
-    <div class="card-title"><span class="emoji">🚀</span> 外观付费AI触达项目开发跟进</div>
-    <p>跟进三方开发排期，确认各端里程碑节点，重点关注游戏日志采集与特征加工模块进度；协同算法侧完成模型训练所需特征定义文档最终确认；目前第五测试方案已完成，下周上线评估指标，确保项目具备可量化验收标准。</p>
-  </div>
+  <!-- 数据分析 Agent -->
+  <section id="analysis">
+    <div class="section-title">📊 一、数据分析 Agent</div>
+    <p class="section-subtitle">以 2026年4月第五人格iOS空中充值月报为验证案例（179行 × 16列结构化数据）</p>
 
-  <!-- 天降福利金 -->
-  <div class="card accent-teal">
-    <div class="card-title"><span class="emoji">🎁</span> AI天降福利金推送机制分析</div>
-    <p>与算法同学对齐天降推送触发逻辑，深入分析北斗推送优化方案，将持续触达潜在用户。</p>
-    <p>同步持续追踪随机探索实验数据，初步评估不同补贴额度对各潜力层人群转化效果差异，收集实验反馈，为后续智能补贴策略参数调优提供数据支撑。</p>
-  </div>
+    <!-- 背景 -->
+    <div class="card-grid-2" style="margin-bottom:16px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-red);margin-bottom:10px;">⚠️ 痛点</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">Excel拉取 → 清洗 → 9维拆解 → 环比计算 → 结论提炼 → 排版，<strong style="color:var(--text-primary)">单次耗时 8-13 小时</strong>，高度依赖分析师经验，容易遗漏交叉维度。</p>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-green);margin-bottom:10px;">🎯 目标</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;"><strong style="color:var(--text-primary)">提效 + 提升分析深度 + 降低人力依赖</strong>，实现标准化可复现的分析产出，分析师从「执行者」升级为「决策者」。</p>
+      </div>
+    </div>
 
-  <!-- 新客二单 -->
-  <div class="card accent-pink">
-    <div class="card-title"><span class="emoji">💰</span> 新客二单项目策略落地</div>
-    <p>iOS 端新客二单项目正式配置上线。用户首单后可获"首单红包"（福利金概率红包，100% 中奖，最高 100 元），金额按 VIP 等级差异化分布，支持所有福利金抵扣场景使用。</p>
-  </div>
+    <!-- 9大模块 -->
+    <p class="section-subtitle">Agent 能力矩阵 — 9大分析模块</p>
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>Agent 分析内容</th>
+            <th>关键发现</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>① 大盘概览</td><td>付费目标评级自动判定</td><td>B+ 达成，距 A 差 +2.70pp</td></tr>
+          <tr><td>② 渠道归因</td><td>7渠道贡献变化自动排序</td><td>会员渠道 -1.45pp 为最大拖累</td></tr>
+          <tr><td>③ 分层空间</td><td>8层级池子趋势 + 归因</td><td>高净值层(3w-10w) 池 -9.26pp ⚠️</td></tr>
+          <tr><td>④ 客服策略</td><td>22个策略 CTR/CVR + 排名</td><td>付费转化率 62.13%（↑+5.54pp）</td></tr>
+          <tr><td>⑤ 短信策略</td><td>5个策略 ROI + 成本收益</td><td>ROI 5.10（↑+151pp）</td></tr>
+          <tr><td>⑥ 覆盖漏斗</td><td>三渠道覆盖 → 登录 → 付费</td><td>助手付费率 90.76% 最优</td></tr>
+          <tr><td>⑦ 增长空间</td><td>拉新/回流/促活 + 3月均对比</td><td>回流 +1.10pp，标记为核心引擎</td></tr>
+          <tr><td>⑧ 获客效率</td><td>新老 × 0氪/非0氪 4维交叉</td><td>老用户登录率 -8.14pp ⚠️</td></tr>
+          <tr><td>⑨ 行动建议</td><td>基于前8模块自动生成</td><td>20条可执行指引，5类归档</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-  <!-- 协作事务 -->
-  <div class="card accent-orange">
-    <div class="card-title"><span class="emoji">📋</span> 协作沟通与事务推进</div>
-    <p>
-      <strong>KPI对齐：</strong>本月起新增"获客人数渗透率目标"与"留存目标"两项指标，已完成信息同步与理解。<br/>
-      <strong>节点报备：</strong>获取4月付费节点公告并完成中台报备。<br/>
-      <strong>权限申请：</strong>完成报表权限与网易支付数据看板权限申请。<br/>
-     
-    </p>
-  </div>
+    <!-- 核心价值 -->
+    <p class="section-subtitle">核心价值对比</p>
+    <div class="card-grid-2" style="margin-bottom:20px;">
+      <div class="stat-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="stat-number green">3min</div>
+            <div class="stat-label">Agent 完成全部分析</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;color:var(--text-muted);text-decoration:line-through;">8-13 小时</div>
+            <div style="font-size:12px;color:var(--text-secondary);">传统方式</div>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-top:14px;"><div class="progress-fill" style="width:97%"></div></div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:6px;">时效提升 97%</div>
+      </div>
+      <div class="stat-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+          <div>
+            <div class="stat-number blue">9</div>
+            <div class="stat-label">分析模块 × 三维对比</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:13px;color:var(--text-muted);text-decoration:line-through;">3-4 个核心维度</div>
+            <div style="font-size:12px;color:var(--text-secondary);">传统方式</div>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-top:14px;"><div class="progress-fill" style="width:80%"></div></div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:6px;">分析深度大幅提升</div>
+      </div>
+    </div>
 
-  <!-- ===== 下周待办 ===== -->
-  <div class="section-header">
-    <span class="section-badge">下周待办</span>
-    <div class="section-line"></div>
-  </div>
+    <!-- 亮点 -->
+    <p class="section-subtitle">典型亮点</p>
+    <div class="highlight-list">
+      <div class="highlight-item">
+        <div class="highlight-icon">🎯</div>
+        <div class="highlight-content">
+          <div class="highlight-title">精准归因</div>
+          <div class="highlight-desc">市占率 ↓-2.06pp，自动定位会员渠道为最大拖累（-1.45pp），精确到渠道级别的变化量</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">⚠️</div>
+        <div class="highlight-content">
+          <div class="highlight-title">风险预警</div>
+          <div class="highlight-desc">高净值层维系池 -9.26pp，自动告警 + 生成维系建议，不遗漏关键风险信号</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">💡</div>
+        <div class="highlight-content">
+          <div class="highlight-title">机会挖掘</div>
+          <div class="highlight-desc">回流空间高于3月均 +1.10pp，对应金额1896.8万，自动标记为优先投入方向</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🔍</div>
+        <div class="highlight-content">
+          <div class="highlight-title">漏斗洞察</div>
+          <div class="highlight-desc">助手渠道付费率 90.76% 最优，但覆盖率仅 41.82%，自动建议扩大投放</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- 客服管线 V2.0 -->
-  <div class="card">
-    <div class="card-title"><span class="emoji">🤖</span> VOC模型准确率攻坚 & 管线 V2.0 落地推进（核心重点）</div>
+  <div class="divider"></div>
 
-    <div class="sub-title">① VOC 准确率攻坚（目标 90%+）</div>
-    <ul class="todo-list">
-      <li>深入分析当前准确率 60% 的根因，梳理高频误判类目与边界 case</li>
-      <li>制定分类优化方案（边界 case 清洗、标注规范统一、分类阈值调整等）</li>
-      <li>执行下轮调优并完成效果验证，持续在群内同步进展</li>
-    </ul>
+  <!-- 策略自动化 Agent -->
+  <section id="strategy">
+    <div class="section-title">📝 二、策略自动化 Agent</div>
 
-    <div class="sub-title">② 高置信度向量库快速匹配通道外放</div>
-    <ul class="todo-list">
-      <li>梳理 VOC 向量库中高频且置信度稳定的问题类目，圈定首批外放范围</li>
-      <li>与技术侧确认向量匹配阈值标准（相似度阈值、top-k 召回数等）</li>
-      <li>设计外放前 AB 对照测试方案，确保速度提升的同时精准率不发生负向波动</li>
-      <li>输出外放后 token 节省量与响应时速预估测算</li>
-    </ul>
+    <div class="card-grid-2" style="margin-bottom:16px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-red);margin-bottom:10px;">⚠️ 痛点</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">DM数据拉取 → Excel清洗 → 历史文案翻找 → 从零创作 → 效果统计 → 排版，<strong style="color:var(--text-primary)">单次耗时 2 小时</strong>，历史经验无法沉淀，每次都是「从零开始」。</p>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-green);margin-bottom:10px;">🎯 目标</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;"><strong style="color:var(--text-primary)">提效 + 经验沉淀</strong>，从「人工写文案」升级为「选模板 + 填变量 + 效果自进化」。</p>
+      </div>
+    </div>
 
-    <div class="sub-title">③ VOC 标准化维护更新机制建立</div>
-    <ul class="todo-list">
-      <li>制定 VOC 分类/注释/槽位/分流类型/转人工信息卡片标准化维护 SOP</li>
-      <li>明确维护更新频率（双周常规更新 + 重大业务变更触发更新双轨机制）</li>
-      <li>建立词条新增/修改/下线审核流程，防止向量库词条失效或污染导致分流错乱</li>
-    </ul>
+    <!-- 能力矩阵 -->
+    <p class="section-subtitle">Agent 能力矩阵</p>
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead>
+          <tr>
+            <th>能力模块</th>
+            <th>Agent 做了什么</th>
+            <th>关键产出</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>文案匹配</td><td>DM策略 ↔ 库 100% 自动匹配</td><td>106条全覆盖，含AB测试标注</td></tr>
+          <tr><td>模板识别</td><td>106条策略去重聚类分析</td><td>5套可复用高转化模板结构</td></tr>
+          <tr><td>效果量化</td><td>每模板关联 CTR/CVR 统计</td><td>证明「人群包 >> 文案」对CTR影响</td></tr>
+          <tr><td>知识库</td><td>公告/中台/补贴自动提取</td><td>65条公告 + 48项能力 + 6个模块</td></tr>
+          <tr><td>数据看板</td><td>DM Excel → JSON → HTML 全自动</td><td>V19看板5个Tab一键产出</td></tr>
+          <tr><td>策略生成器</td><td>4步生成：公告→人群→参考→文案</td><td>从零创作 → 10min 审核模式</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <div class="sub-title">④ 长期监测优化机制搭建</div>
-    <ul class="todo-list">
-      <li>搭建 VOC 准确率、知识库回复有效解决率、互斥机制三条核心监测链路</li>
-      <li>确定指标看板形式与负责人，建立定期复盘节奏</li>
-    </ul>
-  </div>
+    <!-- 自动化分层 -->
+    <p class="section-subtitle">自动化分层</p>
+    <div class="card-grid-3" style="margin-bottom:20px;">
+      <div class="card" style="border-color:rgba(0,212,170,0.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span class="tag tag-green">🟢 全自动</span>
+        </div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">人工彻底退出</div>
+        <div style="color:var(--text-secondary);font-size:13px;line-height:1.8;">数据 Pipeline<br>文案匹配<br>效果分析</div>
+      </div>
+      <div class="card" style="border-color:rgba(245,200,66,0.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span class="tag tag-yellow">🟡 半自动</span>
+        </div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">生成后人工审核</div>
+        <div style="color:var(--text-secondary);font-size:13px;line-height:1.8;">策略生成器文案输出<br>10min 人工审核确认</div>
+      </div>
+      <div class="card" style="border-color:rgba(255,107,107,0.2);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <span class="tag tag-red">🔴 人工保留</span>
+        </div>
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">运营判断不可替代</div>
+        <div style="color:var(--text-secondary);font-size:13px;line-height:1.8;">活动立项<br>人群包定义<br>复盘决策</div>
+      </div>
+    </div>
 
-  <!-- 精细化推送 -->
-  <div class="card accent-green">
-    <div class="card-title"><span class="emoji">📊</span> 精细化推送策略扩充</div>
-    <ul class="todo-list">
-      <li>设计并配置更多精细化场景推送策略，重点围绕企微渠道转化率提升</li>
-      <li>结合"获客渗透率"与"留存"建立数据跟踪视角，了解看板数据口径</li>
-      <li>初步思考提升方向，为下月策略规划提供输入</li>
-    </ul>
-  </div>
+    <!-- 效果对比 -->
+    <div class="card-grid-2">
+      <div class="stat-card">
+        <div class="stat-number yellow">20min</div>
+        <div class="stat-label">单次策略产出耗时（原 2 小时）</div>
+        <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" style="width:83%"></div></div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-top:6px;">提效 83%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number purple">5套</div>
+        <div class="stat-label">可复用高转化模板结构 + 106条历史文案</div>
+        <div style="margin-top:12px;"><span class="tag tag-blue">经验结构化沉淀</span></div>
+      </div>
+    </div>
+  </section>
 
-  <!-- 外观付费 -->
-  <div class="card accent-purple">
-    <div class="card-title"><span class="emoji">🚀</span> 外观付费AI触达项目推进</div>
-    <ul class="todo-list">
-      <li>协同技术侧完成特征工程初版方案联调验证，排查数据流转各节点异常风险</li>
-      <li>推进测试方案细化落地，明确上线评估指标的数据口径与采集方式</li>
-    </ul>
-  </div>
+  <div class="divider"></div>
 
-  <!-- 天降福利金 -->
-  <div class="card accent-teal">
-    <div class="card-title"><span class="emoji">🎁</span> 天降推送时间窗口优化推进 & 实验复盘</div>
-    <ul class="todo-list">
-      <li>汇总本阶段随机探索实验数据，完成不同补贴额度对各潜力层人群转化差异系统性分析</li>
-      <li>输出实验阶段性结论，提出智能补贴策略参数调优建议</li>
-    </ul>
-  </div>
+  <!-- 海外推送 Agent -->
+  <section id="overseas">
+    <div class="section-title">🌏 三、海外推送 Agent</div>
 
-  <!-- 新客二单 -->
-  <div class="card accent-pink">
-    <div class="card-title"><span class="emoji">💰</span> 新客二单项目数据观察</div>
-    <ul class="todo-list">
-      <li>重点观察 iOS 端策略下发量级与福利金消耗量</li>
-      <li>评估"首单红包"对充值用户 ARPU 是否产生正向牵引</li>
-      <li>结合消耗与转化数据，判断概率分布设计是否需要调整，为后续规则优化提供参考</li>
-    </ul>
-  </div>
+    <div class="card-grid-2" style="margin-bottom:16px;">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-red);margin-bottom:10px;">⚠️ 痛点</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;">NGP + LINE + Discord 多渠道推送，手工处理HTML缩进、LINE FLEX JSON 配置、人工监控多个推特账号，<strong style="color:var(--text-primary)">单版本配置耗时 3 小时</strong>，三语言切换高度依赖人工。</p>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;color:var(--accent-green);margin-bottom:10px;">🎯 目标</div>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.8;"><strong style="color:var(--text-primary)">公告抓取 → 多语言适配 → 各渠道一键输出</strong>的全自动推送流水线，人工从「配置者」升级为「审核者」。</p>
+      </div>
+    </div>
+
+    <!-- 现状分层 -->
+    <p class="section-subtitle">现状与自动化分层</p>
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <table>
+        <thead>
+          <tr>
+            <th>环节</th>
+            <th>当前状态</th>
+            <th>自动化空间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>外网公告抓取</td><td><span class="tag tag-green">✅ 已全自动</span></td><td>维持现状</td></tr>
+          <tr><td>HTML 看板生成</td><td><span class="tag tag-green">✅ 已全自动</span></td><td>扩展多语言模板</td></tr>
+          <tr><td>NGP 邮件 HTML 配置</td><td><span class="tag tag-yellow">🟡 辅助+手工缩进</span></td><td>🔥 可全自动</td></tr>
+          <tr><td>LINE FLEX JSON</td><td><span class="tag tag-yellow">🟡 辅助+人工修改</span></td><td>🔥 模板化直出</td></tr>
+          <tr><td>Discord 推送</td><td><span class="tag tag-yellow">🟡 工具+人工</span></td><td>🟡 半自动可行</td></tr>
+          <tr><td>推特多账号监控</td><td><span class="tag tag-red">🔴 人工持续盯守</span></td><td>🔥 自动触发</td></tr>
+          <tr><td>多语言翻译适配</td><td><span class="tag tag-red">🔴 人工介入</span></td><td>🔥 LLM 接管</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 后续方向 -->
+    <p class="section-subtitle">后续自动化方向</p>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px;">
+
+      <!-- P0 -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <span class="priority-tag p0">P0</span>
+          <span style="font-weight:700;font-size:14px;">推送内容生产流水线</span>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin-bottom:8px;">
+          <div style="background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.35);border-radius:10px;padding:12px 32px;text-align:center;">
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">输入源</div>
+            <div style="font-weight:700;font-size:14px;color:var(--accent-blue);">🌐 外网公告（JP / EN 原文）</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;color:var(--text-muted);font-size:20px;line-height:1;margin-bottom:8px;">↓</div>
+
+        <div style="display:flex;justify-content:center;margin-bottom:8px;">
+          <div style="background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:10px;padding:12px 32px;text-align:center;">
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;">处理层</div>
+            <div style="font-weight:700;font-size:14px;color:var(--accent-purple);">🤖 LLM 自动翻译 + 适配（日 / 英 / 中 三语）</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;color:var(--text-muted);font-size:20px;line-height:1;margin-bottom:16px;">↓</div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+          <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:14px 12px;text-align:center;">
+            <div style="font-size:22px;margin-bottom:6px;">📧</div>
+            <div style="font-weight:700;font-size:13px;color:var(--accent-green);margin-bottom:6px;">NGP 邮件 HTML</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">脚本处理缩进<br>合并行自动输出</div>
+          </div>
+          <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:14px 12px;text-align:center;">
+            <div style="font-size:22px;margin-bottom:6px;">💬</div>
+            <div style="font-weight:700;font-size:13px;color:var(--accent-green);margin-bottom:6px;">LINE FLEX</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">JSON 模板<br>变量直出</div>
+          </div>
+          <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:14px 12px;text-align:center;">
+            <div style="font-size:22px;margin-bottom:6px;">🎮</div>
+            <div style="font-weight:700;font-size:13px;color:var(--accent-green);margin-bottom:6px;">Discord MD</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">Embed 自动<br>格式化</div>
+          </div>
+          <div style="background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:14px 12px;text-align:center;">
+            <div style="font-size:22px;margin-bottom:6px;">🐦</div>
+            <div style="font-weight:700;font-size:13px;color:var(--accent-green);margin-bottom:6px;">推特文案</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">字数 / 话题<br>标签自动加</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P1 -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <span class="priority-tag p1">P1</span>
+          <span style="font-weight:700;font-size:14px;">推特多账号监控自动化</span>
+        </div>
+
+        <div style="display:flex;align-items:stretch;gap:0;">
+          <div style="flex:1;background:rgba(79,142,247,0.07);border:1px solid rgba(79,142,247,0.25);border-radius:10px;padding:16px 14px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:6px;">🔄</div>
+            <div style="font-size:12px;font-weight:700;color:var(--accent-blue);margin-bottom:6px;">定时轮询</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">IdentityV JP/EN<br>燕云 WWM_JP<br>等多账号</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:0 12px;color:var(--text-muted);font-size:20px;">→</div>
+          <div style="flex:1;background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.25);border-radius:10px;padding:16px 14px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:6px;">🤖</div>
+            <div style="font-size:12px;font-weight:700;color:var(--accent-purple);margin-bottom:6px;">LLM 判断类型</div>
+            <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">活动 / 公告<br>互动 / 其他</div>
+          </div>
+          <div style="display:flex;align-items:center;padding:0 12px;color:var(--text-muted);font-size:20px;">→</div>
+          <div style="flex:1.2;display:flex;flex-direction:column;gap:8px;">
+            <div style="flex:1;background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:12px 14px;text-align:center;">
+              <div style="font-size:12px;font-weight:700;color:var(--accent-green);margin-bottom:4px;">✅ 需同步</div>
+              <div style="font-size:12px;color:var(--text-secondary);line-height:1.5;">自动生成多语言草稿<br>→ 人工一键确认发布</div>
+            </div>
+            <div style="flex:1;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;text-align:center;">
+              <div style="font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:4px;">⏭ 不需同步</div>
+              <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">忽略 或<br>推送提醒</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <span class="priority-tag p2">P2</span>
+          <span style="font-weight:700;font-size:14px;">版本节点内容自动配置包</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0;">
+          <div style="flex:1;background:rgba(79,142,247,0.07);border:1px solid rgba(79,142,247,0.25);border-radius:10px;padding:16px 14px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:8px;">📥</div>
+            <div style="font-size:12px;font-weight:700;color:var(--accent-blue);margin-bottom:8px;">输入</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--text-secondary);">节点时间</div>
+              <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--text-secondary);">内容清单</div>
+              <div style="background:rgba(255,255,255,0.05);border-radius:6px;padding:5px 8px;font-size:12px;color:var(--text-secondary);">语言选择</div>
+            </div>
+          </div>
+          <div style="padding:0 16px;color:var(--text-muted);font-size:22px;">→</div>
+          <div style="flex:0.8;background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.25);border-radius:10px;padding:16px 14px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:8px;">⚙️</div>
+            <div style="font-size:12px;font-weight:700;color:var(--accent-purple);margin-bottom:4px;">自动配置生成</div>
+            <div style="font-size:12px;color:var(--text-secondary);">多语言适配<br>格式自动转换</div>
+          </div>
+          <div style="padding:0 16px;color:var(--text-muted);font-size:22px;">→</div>
+          <div style="flex:1.2;background:rgba(0,212,170,0.07);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:16px 14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--accent-green);margin-bottom:10px;text-align:center;">📦 输出包</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;">
+                <span style="font-size:13px;">📧</span>
+                <span style="font-size:12px;color:var(--text-secondary);">NGP 邮件 HTML（日/英）</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;">
+                <span style="font-size:13px;">💬</span>
+                <span style="font-size:12px;color:var(--text-secondary);">LINE FLEX JSON（日/英）</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;">
+                <span style="font-size:13px;">🎮</span>
+                <span style="font-size:12px;color:var(--text-secondary);">Discord Embed（日/英）</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.04);border-radius:6px;padding:6px 10px;">
+                <span style="font-size:13px;">🐦</span>
+                <span style="font-size:12px;color:var(--text-secondary);">推特文案草稿（日/英）</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 人效收益 -->
+    <p class="section-subtitle">预期人效收益</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>环节</th>
+            <th>当前耗时</th>
+            <th>自动化后</th>
+            <th>节省</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>多语言内容生产</td><td>3h / 版本</td><td>20min</td><td><span class="tag tag-green">80%</span></td></tr>
+          <tr><td>LINE FLEX 配置</td><td>30min / 条</td><td>2min</td><td><span class="tag tag-green">93%</span></td></tr>
+          <tr><td>NGP 邮件 HTML</td><td>2h / 次</td><td>5min</td><td><span class="tag tag-green">96%</span></td></tr>
+          <tr><td>推特账号监控</td><td>人工持续盯</td><td>自动触发</td><td><span class="tag tag-green">100%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- 下周规划 -->
+  <section id="plan">
+    <div class="section-title">🎯 下周规划确认</div>
+    <p class="section-subtitle">三条产线已跑通，下周重点从「能用」升级到「自动跑」</p>
+    <div class="table-wrap" style="margin-bottom:32px;">
+      <table>
+        <thead>
+          <tr>
+            <th>优先级</th>
+            <th>行动项</th>
+            <th>所属方向</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="priority-tag p0">P0</span></td>
+            <td>数据分析 Agent 定时化，月报自动触发</td>
+            <td>分析产线</td>
+          </tr>
+          <tr>
+            <td><span class="priority-tag p0">P0</span></td>
+            <td>海外推送流水线落地，终结手工 HTML</td>
+            <td>海外产线</td>
+          </tr>
+          <tr>
+            <td><span class="priority-tag p1">P1</span></td>
+            <td>接入 4/29 最新数据，策略生成器保持最新</td>
+            <td>策略产线</td>
+          </tr>
+          <tr>
+            <td><span class="priority-tag p2">P2</span></td>
+            <td>三 Agent 打通：分析 → 策略 → 推送闭环</td>
+            <td>全链路</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 收尾引言 -->
+    <div class="final-quote">
+      <p>💬 <strong>三条AI自动化产线本周完成从0到1</strong>，覆盖数据分析、策略生成、海外推送全场景，综合人效提升 80%-97%，<br>下周目标：从「能跑」升级到「自动跑」。</p>
+    </div>
+  </section>
+
+</div>
 
 </body>
 </html>
